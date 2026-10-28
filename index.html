@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ważne pytanie!</title>
+    <style>
+        body {
+            background-color: #ff94a2;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20vh;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 { 
+            color: #ffffff; 
+            font-size: 3em; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+            position: relative;
+        }
+        .btn-container {
+            position: relative;
+            height: 200px;
+            margin-top: 30px;
+            z-index: 10;
+        }
+        .btn {
+            font-size: 1.5em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #btn-yes { 
+            background-color: white; 
+            color: #ff94a2; 
+            transition: transform 0.2s; 
+        }
+        #btn-yes:hover { 
+            transform: scale(1.1); 
+        }
+        #btn-no { 
+            background-color: white; 
+            color: #ff94a2; 
+            position: absolute;
+            left: 55%; 
+        }
+        
+        /* Styl dla szczęśliwego kotka */
+        #cat-gif {
+            width: 250px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Styl dla spadających kwiatków */
+        .flower {
+            position: absolute;
+            top: -50px;
+            font-size: 25px;
+            animation: fall linear forwards;
+            z-index: 1;
+            user-select: none;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="flower-container"></div>
+
+    <h1 id="question">Zostaniesz moją dziewczyną? 💖</h1>
+    
+    <div id="buttons" class="btn-container">
+        <button id="btn-yes" class="btn" onclick="sayYes()">TAK ❤️</button>
+        <button id="btn-no" class="btn" onmouseover="runAway()">Nie</button>
+    </div>
+
+    <script>
+        // Efekt uciekającego przycisku
+        function runAway() {
+            const btn = document.getElementById('btn-no');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+        }
+
+        // Akcja po kliknięciu TAK
+        function sayYes() {
+            // Zmiana tekstu i dodanie gifa z kotkiem
+            document.getElementById('question').innerHTML = `
+                YAY!!! 🎉<br>
+                <span style='font-size: 0.5em'>Sprawiłaś, że jestem najszczęśliwszy!</span><br>
+                <img id="cat-gif" src="https://media1.tenor.com/m/0AVbKGY_MxMAAAAd/cat-dance-dancing-cat.gif" alt="Szczęśliwy kotek">
+            `;
+            document.getElementById('buttons').style.display = 'none';
+        }
+
+        // Generowanie spadających kwiatków
+        function createFlower() {
+            const flower = document.createElement('div');
+            // Wybór losowego kwiatka
+            const flowers = ['🌸', '🌺', '🌼', '🌷', '🌹'];
+            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+            flower.classList.add('flower');
+            
+            // Losowa pozycja startowa w poziomie i czas opadania
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDuration = Math.random() * 3 + 3 + 's'; // Od 3 do 6 sekund
+            
+            document.getElementById('flower-container').appendChild(flower);
+            
+            // Usuwanie kwiatka, gdy wyleci poza ekran (żeby nie obciążać przeglądarki)
+            setTimeout(() => {
+                flower.remove();
+            }, 6000);
+        }
+
+        // Tworzenie nowego kwiatka co 300 milisekund
+        setInterval(createFlower, 300);
+    </script>
+
+</body>
+</html>
