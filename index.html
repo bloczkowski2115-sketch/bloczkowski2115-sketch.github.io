@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ważne pytanie!</title>
+    <style>
+        body {
+            background-color: #ff94a2; /* Kolor tła zbliżony do tego z filmu */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 25vh;
+            overflow: hidden; /* Zapobiega pojawianiu się pasków przewijania, gdy przycisk ucieka do krawędzi */
+        }
+        h1 { 
+            color: #ffffff; 
+            font-size: 3em; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn-container {
+            position: relative;
+            height: 200px;
+            margin-top: 30px;
+        }
+        .btn {
+            font-size: 1.5em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #btn-yes { 
+            background-color: white; 
+            color: #ff94a2; 
+            transition: transform 0.2s; 
+        }
+        #btn-yes:hover { 
+            transform: scale(1.1); 
+        }
+        #btn-no { 
+            background-color: white; 
+            color: #ff94a2; 
+            position: absolute; /* Niezbędne, aby przycisk swobodnie zmieniał pozycję */
+            left: 55%; /* Początkowa pozycja obok przycisku TAK */
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Zostaniesz moją dziewczyną? 💖</h1>
+    
+    <div id="buttons" class="btn-container">
+        <button id="btn-yes" class="btn" onclick="sayYes()">TAK ❤️</button>
+        <button id="btn-no" class="btn" onmouseover="runAway()">No</button>
+    </div>
+
+    <script>
+        function runAway() {
+            const btn = document.getElementById('btn-no');
+            // Losowanie nowej pozycji w obrębie okna przeglądarki
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+        }
+
+        function sayYes() {
+            // Zmiana tekstu i ukrycie przycisków po kliknięciu TAK
+            document.getElementById('question').innerHTML = "YAY!!! 🎉<br><span style='font-size: 0.5em'>DAMNN Sprawiłaś, że jestem najszczęśliwszy!!!</span>";
+            document.getElementById('buttons').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
