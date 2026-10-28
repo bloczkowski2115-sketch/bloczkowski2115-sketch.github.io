@@ -49,15 +49,12 @@
             left: 55%; 
         }
         
-        /* Styl dla szczęśliwego kotka */
         #cat-gif {
             width: 250px;
-            border-radius: 15px;
             margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            /* Usunięto obramowanie i cień, aby kotek z przezroczystym tłem wyglądał naturalnie */
         }
 
-        /* Styl dla spadających kwiatków */
         .flower {
             position: absolute;
             top: -50px;
@@ -76,6 +73,9 @@
 <body>
 
     <div id="flower-container"></div>
+    
+    <!-- Dodany odtwarzacz muzyki (ukryty) -->
+    <audio id="bg-music" src="muzyka.mp3"></audio>
 
     <h1 id="question">Zostaniesz moją dziewczyną? 💖</h1>
     
@@ -85,7 +85,6 @@
     </div>
 
     <script>
-        // Efekt uciekającego przycisku
         function runAway() {
             const btn = document.getElementById('btn-no');
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
@@ -95,38 +94,36 @@
             btn.style.top = `${y}px`;
         }
 
-        // Akcja po kliknięciu TAK
         function sayYes() {
-            // Zmiana tekstu i dodanie gifa z kotkiem
+            // Podmiana na Twojego kota source.gif
             document.getElementById('question').innerHTML = `
                 YAY!!! 🎉<br>
-                <span style='font-size: 0.5em'>Sprawiłaś, że jestem najszczęśliwszy!</span><br>
-                <img id="cat-gif" src="https://media1.tenor.com/m/0AVbKGY_MxMAAAAd/cat-dance-dancing-cat.gif" alt="Szczęśliwy kotek">
+                <span style='font-size: 0.5em'>DAMNNN jestem najszczęśliwszy na świecie!!!</span><br>
+                <img id="cat-gif" src="source.gif" alt="Szczęśliwy kotek">
             `;
             document.getElementById('buttons').style.display = 'none';
+            
+            // Odtworzenie muzyki
+            const music = document.getElementById('bg-music');
+            music.play().catch(e => console.log("Przeglądarka zablokowała autoodtwarzanie"));
         }
 
-        // Generowanie spadających kwiatków
         function createFlower() {
             const flower = document.createElement('div');
-            // Wybór losowego kwiatka
             const flowers = ['🌸', '🌺', '🌼', '🌷', '🌹'];
             flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
             flower.classList.add('flower');
             
-            // Losowa pozycja startowa w poziomie i czas opadania
             flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 3 + 's'; // Od 3 do 6 sekund
+            flower.style.animationDuration = Math.random() * 3 + 3 + 's'; 
             
             document.getElementById('flower-container').appendChild(flower);
             
-            // Usuwanie kwiatka, gdy wyleci poza ekran (żeby nie obciążać przeglądarki)
             setTimeout(() => {
                 flower.remove();
             }, 6000);
         }
 
-        // Tworzenie nowego kwiatka co 300 milisekund
         setInterval(createFlower, 300);
     </script>
 
